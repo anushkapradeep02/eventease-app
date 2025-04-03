@@ -1,0 +1,31 @@
+﻿@page "/event/{id:int}"
+@using EventEaseApp.Data
+
+@code {
+    [Parameter] public int id { get; set; }
+    private Event? currentEvent;
+
+    protected override void OnInitialized()
+    {
+        currentEvent = eventList.FirstOrDefault(e => e.Id == id);
+    }
+
+    private List<Event> eventList = new()
+    {
+        new Event { Id = 1, Name = "Tech Expo 2025", Date = DateTime.Now.AddDays(10), Location = "Seattle" },
+        new Event { Id = 2, Name = "Startup Mixer", Date = DateTime.Now.AddDays(20), Location = "San Francisco" },
+        new Event { Id = 3, Name = "AI Conference", Date = DateTime.Now.AddDays(30), Location = "New York" }
+    };
+}
+
+@if (currentEvent is null)
+{
+    <h3>Event Not Found</h3>
+    <p>The event you’re looking for does not exist.</p>
+}
+else
+{
+    <h2>@currentEvent.Name</h2>
+    <p><strong>Date:</strong> @currentEvent.Date.ToShortDateString()</p>
+    <p><strong>Location:</strong> @currentEvent.Location</p>
+}

@@ -1,0 +1,25 @@
+@using EventEaseApp.Data
+
+@if (string.IsNullOrWhiteSpace(EventName) || EventDate == default || string.IsNullOrWhiteSpace(Location))
+{
+    <div class="event-card error">
+        <p><strong>Error:</strong> Invalid event data</p>
+    </div>
+}
+else
+{
+    <div class="event-card">
+        <h3>@EventName</h3>
+        <p><strong>Date:</strong> @EventDate.ToShortDateString()</p>
+        <p><strong>Location:</strong> @Location</p>
+        <NavLink href="/event/@EventId">Details</NavLink> |
+        <NavLink href="/register">Register</NavLink>
+    </div>
+}
+
+@code {
+    [Parameter] public int EventId { get; set; }
+    [Parameter] public string EventName { get; set; } = "Unnamed Event";
+    [Parameter] public DateTime EventDate { get; set; }
+    [Parameter] public string Location { get; set; } = "Location TBD";
+}
